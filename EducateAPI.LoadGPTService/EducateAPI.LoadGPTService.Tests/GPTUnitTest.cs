@@ -22,5 +22,12 @@ namespace EducateAPI.LoadGPTService.Tests
 
             Assert.Equal(expectedResponse, result);
         }
+
+        [Fact]
+        public async Task GetResponseAsync_ShouldThrowException_WhenPromptIsNull()
+        {
+            var apiClient = new Mock<IGPTClient>().Object;
+            await Assert.ThrowsAsync<ArgumentException>(() => apiClient.GetResponseAsync(null));
+        }
     }
 }
