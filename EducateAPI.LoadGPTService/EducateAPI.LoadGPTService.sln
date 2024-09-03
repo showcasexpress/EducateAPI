@@ -5,6 +5,8 @@ VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EducateAPI.LoadGPTService", "EducateAPI.LoadGPTService\EducateAPI.LoadGPTService.csproj", "{BAB5AD6E-E595-4304-9E0B-6B499768E74A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EducateAPI.LoadGPTService.Tests", "EducateAPI.LoadGPTService.Tests\EducateAPI.LoadGPTService.Tests.csproj", "{A5E2BA1A-7034-4E0A-897F-352DFF2A3AE2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{BAB5AD6E-E595-4304-9E0B-6B499768E74A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BAB5AD6E-E595-4304-9E0B-6B499768E74A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BAB5AD6E-E595-4304-9E0B-6B499768E74A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5E2BA1A-7034-4E0A-897F-352DFF2A3AE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5E2BA1A-7034-4E0A-897F-352DFF2A3AE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5E2BA1A-7034-4E0A-897F-352DFF2A3AE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5E2BA1A-7034-4E0A-897F-352DFF2A3AE2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
