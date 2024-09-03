@@ -3,11 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 namespace EducateAPI.LoadGPTService.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/v1/gpt")]
     public class GPTClientController : ControllerBase
     {
-        private readonly GPTClient _gptClient;
-        public GPTClientController(GPTClient gptClient)
+        private readonly IGPTClient _gptClient;
+        public GPTClientController(IGPTClient gptClient)
         {
             _gptClient = gptClient;
         }
