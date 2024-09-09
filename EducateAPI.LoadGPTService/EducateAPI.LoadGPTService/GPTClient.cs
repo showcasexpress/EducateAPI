@@ -1,4 +1,5 @@
-﻿using OpenAI.Chat;
+﻿using EducateAPI.LoadGPTService.Interfaces;
+using OpenAI.Chat;
 using System.ClientModel;
 
 namespace EducateAPI.LoadGPTService

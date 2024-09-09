@@ -1,4 +1,4 @@
-﻿namespace EducateAPI.LoadGPTService
+﻿namespace EducateAPI.LoadGPTService.Interfaces
 {
     public interface IGPTClient
     {

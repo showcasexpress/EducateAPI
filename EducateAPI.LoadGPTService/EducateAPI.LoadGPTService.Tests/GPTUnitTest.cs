@@ -1,6 +1,8 @@
 using Xunit;
 using Moq;
 using System.Threading.Tasks;
+using EducateAPI.LoadGPTService.Interfaces;
+
 namespace EducateAPI.LoadGPTService.Tests
 {
     public class GPTUnitTest

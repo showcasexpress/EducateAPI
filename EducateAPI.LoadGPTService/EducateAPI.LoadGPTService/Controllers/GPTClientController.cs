@@ -1,3 +1,4 @@
+using EducateAPI.LoadGPTService.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EducateAPI.LoadGPTService.Controllers
@@ -17,7 +18,7 @@ namespace EducateAPI.LoadGPTService.Controllers
         {
             try
             {
-                return await Task.FromResult(Ok(await _gptClient.GetResponseAsync(prompt)));
+                return Ok(await _gptClient.GetResponseAsync(prompt));
             }
             catch (Exception ex)
             {

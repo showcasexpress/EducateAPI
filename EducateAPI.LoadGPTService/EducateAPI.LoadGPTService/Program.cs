@@ -1,4 +1,5 @@
 using EducateAPI.LoadGPTService;
+using EducateAPI.LoadGPTService.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
