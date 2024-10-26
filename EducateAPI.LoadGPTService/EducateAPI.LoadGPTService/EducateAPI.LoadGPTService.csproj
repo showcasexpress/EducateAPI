@@ -6,6 +6,10 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>79aa8de7-f838-4533-bf72-7e60615dfdc5</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <OutputType>Exe</OutputType>
+     <!--<GenerateAssemblyInfo>false</GenerateAssemblyInfo> 
+     <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>--> 
+
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,8 +17,10 @@
     <PackageReference Include="MassTransit.RabbitMQ" Version="8.2.5" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.1" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="OPENAI" Version="2.0.0-beta.10" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
+
 
 </Project>

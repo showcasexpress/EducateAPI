@@ -12,10 +12,11 @@ namespace EducateAPI.LoadGPTService.RabbitMQ.Services
     public class RabbitMQPublisher<T> : IRabbitMQPublisher<T>
     {
         private readonly RabbitMQConfiguration _rabbitMQconfiguration;
-
-        public RabbitMQPublisher(IOptions<RabbitMQConfiguration> rabbitMQconfiguration)
+        private readonly IConfiguration _config;
+        public RabbitMQPublisher(IConfiguration config, IOptions<RabbitMQConfiguration> rabbitMQconfiguration)
         {
             _rabbitMQconfiguration = rabbitMQconfiguration.Value;
+            _config = config;
         }
 
         public async Task PublishMessageAsync(T message, string queueName)
@@ -24,7 +25,7 @@ namespace EducateAPI.LoadGPTService.RabbitMQ.Services
             {
                 HostName = _rabbitMQconfiguration.HostName,
                 UserName = _rabbitMQconfiguration.UserName,
-                Password = _rabbitMQconfiguration.PassWord
+                Password = _config["Rabbitmq:password"] //_rabbitMQconfiguration.PassWord
             };
 
             using var connection = factory.CreateConnection();
