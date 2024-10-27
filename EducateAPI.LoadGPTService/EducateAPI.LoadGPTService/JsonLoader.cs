@@ -14,7 +14,6 @@ namespace EducateAPI.LoadGPTService
         /* TODO : Periodically load this function
          * Iterate on the json objects, and send objects to adequate service queues based on their types.
          */
-
         public Task LoadAsync(string path)
         {
             throw new NotImplementedException();
