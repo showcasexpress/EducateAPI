@@ -1,6 +1,7 @@
 using EducateAPI.LoadGPTService;
 using EducateAPI.LoadGPTService.Interfaces;
-
+using EducateAPI.LoadGPTService.RabbitMQ;
+using EducateAPI.LoadGPTService.RabbitMQ.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -10,6 +11,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<IGPTClient, GPTClient>();
+builder.Services.AddSingleton(typeof(IRabbitMQPublisher<>), typeof(RabbitMQPublisher<>));
+builder.Services.Configure<RabbitMQConfiguration>(builder.Configuration.GetSection("RabbitMQ"));
+
 
 var app = builder.Build();
 
