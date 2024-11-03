@@ -8,7 +8,6 @@
       ASPNETCORE_Kestrel__Certificates__Default__Password: ${CERTIFICATE_PASSWORD}
       ASPNETCORE_URLS: https://+:443;http://+:80
       ASPNETCORE_Kestrel__Certificates__Default__Path: /https/EducateAPI.LoadGPTService.pfx
-      RABBITMQ_ERLANG_COOKIE: ${ERLANG_COOKIE}
     ports:
       - "5000:80"
       - "5001:443"
@@ -16,21 +15,13 @@
       - ${USER_PATH}\.aspnet\https\EducateAPI.LoadGPTService.pfx:/https/EducateAPI.LoadGPTService.pfx:ro
       - ${USER_PATH}\AppData\Roaming\microsoft\UserSecrets:/root/.microsoft/usersecrets:ro
       - ${USER_PATH}\.aspnet\https:/root/.aspnet/https/:ro
-    depends_on:
-      rabbitmq:
-        condition: service_healthy  # Correct indentation here
-
   rabbitmq:
-    image: rabbitmq:management
+    image: rabbitmq:3-management
+    container_name: rabbitmq
     ports:
-      - "5672:5672"  # RabbitMQ server port
-      - "15672:15672"  # RabbitMQ UI port
-    environment:
-      RABBITMQ_DEFAULT_USER: owner
-      RABBITMQ_DEFAULT_PASS: ${MQ_PASSWORD}
-    env_file: .env
-    healthcheck:  # Ensure correct indentation here
-      test: ["CMD", "rabbitmq-diagnostics", "check_running"]  # Command to check health
-      interval: 30s
-      timeout: 10s
-      retries: 3
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+volumes:
+  rabbitmq_data:
