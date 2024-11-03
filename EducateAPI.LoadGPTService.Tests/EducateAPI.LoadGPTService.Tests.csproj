@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\EducateAPI.LoadGPTService\EducateAPI.LoadGPTService.csproj" />
+    <ProjectReference Include="..\EducateAPI.LoadGPTService\EducateAPI.LoadGPTService\EducateAPI.LoadGPTService.csproj" />
   </ItemGroup>
 
 </Project>

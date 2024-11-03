@@ -6,35 +6,38 @@ using System.Text.Json.Serialization;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System.Text;
+using Microsoft.AspNetCore.Connections;
 
 namespace EducateAPI.LoadGPTService.RabbitMQ.Services
 {
     public class RabbitMQPublisher<T> : IRabbitMQPublisher<T>
     {
-        private readonly RabbitMQConfiguration _rabbitMQconfiguration;
-        private readonly IConfiguration _config;
-        public RabbitMQPublisher(IConfiguration config, IOptions<RabbitMQConfiguration> rabbitMQconfiguration)
+
+        private readonly IRabbitMQConnectionFactory _factory;
+        public RabbitMQPublisher(IRabbitMQConnectionFactory factory)
         {
-            _rabbitMQconfiguration = rabbitMQconfiguration.Value;
-            _config = config;
+            _factory = factory;
         }
 
         public async Task PublishMessageAsync(T message, string queueName)
         {
-            var factory = new ConnectionFactory
+            try
             {
-                HostName = _rabbitMQconfiguration.HostName,
-                UserName = _rabbitMQconfiguration.UserName,
-                Password = _config["Rabbitmq:password"] //_rabbitMQconfiguration.PassWord
-            };
+                var connection = _factory.CreateConnection();
+                using var channel = connection.CreateModel();
+                channel.QueueDeclare(queue: queueName, durable: false, exclusive: false, autoDelete: false, arguments: null);
+                string messageJson = JsonConvert.SerializeObject(message);
+                var body = Encoding.UTF8.GetBytes(messageJson);
 
-            using var connection = factory.CreateConnection();
-            using var channel = connection.CreateModel();
-            channel.QueueDeclare(queue: queueName, durable: false, exclusive: false, autoDelete: false, arguments: null);
-            string messageJson = JsonConvert.SerializeObject(message);
-            var body = Encoding.UTF8.GetBytes(messageJson);
-            
-            await Task.Run(() => channel.BasicPublish(exchange: "", routingKey: queueName, basicProperties: null, body: body));
+                await Task.Run(() => channel.BasicPublish(exchange: "", routingKey: queueName, basicProperties: null, body: body));
+
+                Console.WriteLine(" [x] Sent {0}", message);
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error publishing the message : {ex.Message}");
+            }
         }
     }
 }

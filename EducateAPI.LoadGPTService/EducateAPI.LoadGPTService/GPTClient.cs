@@ -7,18 +7,17 @@ namespace EducateAPI.LoadGPTService
     public class GPTClient : IGPTClient
     {
         private readonly IConfiguration _config;
-
-        public GPTClient(IConfiguration config)
+        private readonly IHostEnvironment _env;
+        public GPTClient(IConfiguration config, IHostEnvironment env)
         {
             _config = config;
+            _env = env;
         }
 
         public async Task<string> GetResponseAsync(string prompt)
         {
             try
             {
-                // Flag to display generated content to console
-                var debug = true;
                 var responseOutput = string.Empty;
 
                 var key = Environment.GetEnvironmentVariable("OPEN_API_KEY") ?? _config["OPEN_API_KEY"];
@@ -33,19 +32,22 @@ namespace EducateAPI.LoadGPTService
 
                 var updates = client.CompleteChatStreamingAsync(prompt);
 
-                Console.WriteLine("$[Assistant]:");
+                if (_env.IsDevelopment())
+                    Console.WriteLine("$[Assistant]:");
+
                 await foreach (var update in updates)
                 {
                     foreach (var updatePart in update.ContentUpdate)
                     {
-                        if (debug) Console.Write(updatePart.Text);
+                        // Output callback to console in Development Environment
+                        if (_env.IsDevelopment()) Console.Write(updatePart.Text);
                         responseOutput += updatePart.Text;
                     }
                 }
 
                 return responseOutput;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 // TODO: Integrate Logging service.
                 Console.WriteLine($"Exception in [GPTClient][GetResponseAsync] :{ex.Message}");

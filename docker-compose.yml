@@ -1,0 +1,27 @@
+﻿services:
+  educateapi:
+    build:
+      context: EducateAPI.LoadGPTService/EducateAPI.LoadGPTService/
+      dockerfile: Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_Kestrel__Certificates__Default__Password: ${CERTIFICATE_PASSWORD}
+      ASPNETCORE_URLS: https://+:443;http://+:80
+      ASPNETCORE_Kestrel__Certificates__Default__Path: /https/EducateAPI.LoadGPTService.pfx
+    ports:
+      - "5000:80"
+      - "5001:443"
+    volumes:
+      - ${USER_PATH}\.aspnet\https\EducateAPI.LoadGPTService.pfx:/https/EducateAPI.LoadGPTService.pfx:ro
+      - ${USER_PATH}\AppData\Roaming\microsoft\UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${USER_PATH}\.aspnet\https:/root/.aspnet/https/:ro
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+volumes:
+  rabbitmq_data:
