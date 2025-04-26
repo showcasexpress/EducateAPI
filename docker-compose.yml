@@ -17,12 +17,21 @@
       - ${USER_PATH}\.aspnet\https\EducateAPI.LoadGPTService.pfx:/https/EducateAPI.LoadGPTService.pfx:ro
       - ${USER_PATH}\AppData\Roaming\microsoft\UserSecrets:/root/.microsoft/usersecrets:ro
       - ${USER_PATH}\.aspnet\https:/root/.aspnet/https/:ro
+    depends_on:
+      rabbitmq:
+          condition: service_healthy
   rabbitmq:
     image: rabbitmq:3-management
     container_name: rabbitmq
     ports:
       - 5672:5672
       - 15672:15672
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "ping"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      # start_period: 30s
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
 volumes:

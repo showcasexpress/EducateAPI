@@ -3,9 +3,9 @@
     public class QuizDTO
     {
         public Guid Id { get; set; }
-        public string Question { get; set; }
-        public List<string> Choices { get; set; }
-        public List<string> CorrectAnswersIndexes { get; set; }
-        public bool IsMultipleChoices { get; set; } 
+        public required string Question { get; set; }
+        public required List<string> Choices { get; set; }
+        public required List<string>? CorrectAnswersIndexes { get; set; }
+        public required bool IsMultipleChoices { get; set; } 
     }
 }

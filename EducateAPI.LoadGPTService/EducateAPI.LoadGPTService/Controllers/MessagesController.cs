@@ -28,7 +28,7 @@ namespace EducateAPI.LoadGPTService.Controllers
         public void PostMessage([FromBody] string value)
         {
             Console.WriteLine(value);
-            _rabbitMQPublisher.PublishMessageAsync(value, RabbitQueues.StoriesQueue);
+            _rabbitMQPublisher.PublishMessageAsync(value, RabbitQueues.StoriesQueue, string.Empty);
         }
 
 

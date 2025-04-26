@@ -2,6 +2,7 @@ using EducateAPI.LoadGPTService;
 using EducateAPI.LoadGPTService.Interfaces;
 using EducateAPI.LoadGPTService.RabbitMQ;
 using EducateAPI.LoadGPTService.RabbitMQ.Services;
+using EducateAPI.LoadGPTService.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -21,9 +22,12 @@ builder.Services.AddSingleton<IRabbitMQConnectionFactory, RabbitMQConnection>();
 builder.Services.AddSingleton(typeof(IRabbitMQPublisher<>), typeof(RabbitMQPublisher<>));
 builder.Services.Configure<RabbitMQConfiguration>(builder.Configuration.GetSection("RabbitMQ"));
 
+// Background service
+builder.Services.AddHostedService<GPTService>();
 
 
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -32,7 +36,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-//app.UseHttpsRedirection();
+app.UseHttpsRedirection();
 
 //app.UseAuthorization();
 

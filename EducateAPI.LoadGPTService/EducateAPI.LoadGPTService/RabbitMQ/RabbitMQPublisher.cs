@@ -19,17 +19,26 @@ namespace EducateAPI.LoadGPTService.RabbitMQ.Services
             _factory = factory;
         }
 
-        public async Task PublishMessageAsync(T message, string queueName)
+        public async Task PublishMessageAsync(T message, string queueName, string exchange = "")
         {
             try
             {
                 var connection = _factory.CreateConnection();
                 using var channel = connection.CreateModel();
                 channel.QueueDeclare(queue: queueName, durable: false, exclusive: false, autoDelete: false, arguments: null);
+                
+                if(!string.IsNullOrEmpty(exchange))
+                {
+                    channel.ExchangeDeclare(exchange: exchange, type: ExchangeType.Direct);
+                    channel.QueueBind(queue: queueName, exchange: exchange, routingKey: queueName);
+                }
+
+
+                channel.ExchangeDeclare(exchange: exchange, type: ExchangeType.Direct);
                 string messageJson = JsonConvert.SerializeObject(message);
                 var body = Encoding.UTF8.GetBytes(messageJson);
 
-                await Task.Run(() => channel.BasicPublish(exchange: "", routingKey: queueName, basicProperties: null, body: body));
+                await Task.Run(() => channel.BasicPublish(exchange: exchange, routingKey: queueName, basicProperties: null, body: body));
 
                 Console.WriteLine(" [x] Sent {0}", message);
 
