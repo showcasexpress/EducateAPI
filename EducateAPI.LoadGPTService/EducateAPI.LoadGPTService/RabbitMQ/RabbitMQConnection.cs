@@ -19,12 +19,7 @@ namespace EducateAPI.LoadGPTService.RabbitMQ
 
         public IConnection CreateConnection()
         {
-            string rabbitPassword;
-
-            if (_env.IsDevelopment())
-                rabbitPassword = _configuration["RabbitMQ:Password"] ?? "";
-            else
-                rabbitPassword = Environment.GetEnvironmentVariable("RabbitMqPassword") ?? "";
+            string rabbitPassword = Environment.GetEnvironmentVariable("RABBITMQ_PASSWORD") ?? "";
 
             if (string.IsNullOrEmpty(rabbitPassword))
                 throw new InvalidOperationException("Invalid configuration, rabbitMQ password missing or empty.");

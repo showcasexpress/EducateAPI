@@ -8,6 +8,8 @@
       ASPNETCORE_Kestrel__Certificates__Default__Password: ${CERTIFICATE_PASSWORD}
       ASPNETCORE_URLS: https://+:443;http://+:80
       ASPNETCORE_Kestrel__Certificates__Default__Path: /https/EducateAPI.LoadGPTService.pfx
+      OPEN_API_KEY: ${OPEN_API_KEY}
+      RABBITMQ_PASSWORD: ${RABBITMQ_PASSWORD}
     ports:
       - "5000:80"
       - "5001:443"

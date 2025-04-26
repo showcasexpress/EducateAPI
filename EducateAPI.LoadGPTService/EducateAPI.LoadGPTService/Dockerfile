@@ -1,19 +1,19 @@
 # Stage 1: Build the application
-FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build-env
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build-env
 WORKDIR /app
 
 COPY . ./
-COPY EducateAPI.LoadGPTService/*.csproj ./EducateAPI.LoadGPTService/
+COPY *.csproj ./EducateAPI.LoadGPTService/
 
 RUN dotnet restore
 
-COPY EducateAPI.LoadGPTService/. .
+COPY . .
 
 # Build and publish in Release mode
 RUN dotnet publish -c Release -o /app/publish
 
 # Stage 2: Create the runtime image
-FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS runtime
+FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
 WORKDIR /app
 
 # Copy the build output from the first stage
