@@ -32,8 +32,8 @@ namespace EducateAPI.LoadGPTService.Services
                 catch (Exception)
                 {
                     retries--;
-                    if (retries == 0) throw; // If no connection is made after retries, throw the exception
-                    await Task.Delay(5000); // Wait for 1 second before retrying
+                    if (retries == 0) throw;
+                    await Task.Delay(1000);
                 }
             }
             throw new Exception("Could not connect to RabbitMQ after several attempts.");

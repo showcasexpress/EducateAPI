@@ -1,0 +1,6 @@
+@EducateAPI.PostService_HostAddress = http://localhost:5295
+
+GET {{EducateAPI.PostService_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
